@@ -2,8 +2,10 @@ package validator
 
 import (
 	"go.opentelemetry.io/collector/component"
+	"go.opentelemetry.io/collector/exporter/loggingexporter"
 	"go.opentelemetry.io/collector/exporter/otlpexporter"
 	"go.opentelemetry.io/collector/exporter/otlphttpexporter"
+
 	"go.opentelemetry.io/collector/extension/zpagesextension"
 	"go.opentelemetry.io/collector/processor/batchprocessor"
 	"go.opentelemetry.io/collector/processor/memorylimiterprocessor"
@@ -56,6 +58,7 @@ func Components() (component.Factories, error) {
 	exporters := []component.ExporterFactory{
 		otlpexporter.NewFactory(),
 		otlphttpexporter.NewFactory(),
+		loggingexporter.NewFactory(),
 	}
 	factories.Exporters, err = component.MakeExporterFactoryMap(exporters...)
 	if err != nil {
