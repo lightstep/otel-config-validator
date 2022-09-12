@@ -1,0 +1,66 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="wasm_exec.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="container">
+        <h3>OpenTelemetry Collector Configuration Validator</h3>
+        <div class="spinner"></div>
+        <form class="hidden" id="validate-form">
+            <fieldset>
+                <div class="card error hidden">
+                    <div class="section">
+                        <h3 class="doc">Error 💥</h3>
+                        <p class="doc">Error cards are used to display error messages to users.</p>
+                    </div>
+                </div>
+                <div class="card success hidden">
+                    <div class="section">
+                        <h3 class="doc">Success 🎉</h3>
+                        <p class="doc">Your OpenTelemetry Collector Configuration is valid.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <label for="yaml">YAML</label>
+                        <textarea id="yaml" rows="10" cols="80"
+                            placeholder="Paste your OpenTelemetry Collector YAML configuration here."></textarea>
+                    </div>
+                </div>
+                <input type="submit" value="Validate" />
+            </fieldset>
+        </form>
+        <p>Experimental WebAssembly-based OpenTelemetry Configuration Validator.</p>
+    </div>
+    <script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch("conftest.wasm"), go.importObject).then((result) => {
+            go.run(result.instance);
+            document.querySelector('.spinner').classList.add('hidden');
+            document.querySelector('form').classList.remove('hidden');
+        });
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', event => {
+            const yaml = document.querySelector('textarea').value;
+            const err = validateYAML(yaml);
+            console.log(err);
+            if (err.length > 0) {
+                document.querySelector('.error').classList.remove('hidden');
+                document.querySelector('.success').classList.add('hidden');
+                document.querySelector('.error .section p.doc').innerText = err;
+            } else {
+                document.querySelector('.success').classList.remove('hidden');
+                document.querySelector('.error').classList.add('hidden');
+                document.querySelector('.error .section p.doc').innerText = '';
+            }
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>
