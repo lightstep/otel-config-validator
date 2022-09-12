@@ -3,8 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <script src="wasm_exec.js"></script>
+    <script src="example.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        textarea {
+            font-family: monospace;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,6 +33,15 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
+                        <label for="examples">Example Configurations</label>
+                        <select id="examples">
+                            <option value="" selected="selected"></option>
+                            <option value="otlp">OTLP Receiver and Exporter</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
                         <label for="yaml">YAML</label>
                         <textarea id="yaml" rows="10" cols="80"
                             placeholder="Paste your OpenTelemetry Collector YAML configuration here."></textarea>
@@ -35,7 +50,7 @@
                 <input type="submit" value="Validate" />
             </fieldset>
         </form>
-        <p>Experimental WebAssembly-based OpenTelemetry Configuration Validator.</p>
+        <p>Experimental WebAssembly-based <a href="https://github.com/lightstep/otel-config-validator">OpenTelemetry Configuration Validator.</a></p>
     </div>
     <script>
         const go = new Go();
@@ -43,6 +58,15 @@
             go.run(result.instance);
             document.querySelector('.spinner').classList.add('hidden');
             document.querySelector('form').classList.remove('hidden');
+        });
+
+        var examples = document.getElementById("examples");
+        examples.addEventListener('change', () => {
+            if (window.OTEL_EXAMPLES[examples.value]) {
+                document.querySelector('textarea').value = window.OTEL_EXAMPLES[examples.value];
+            } else {
+                document.querySelector('textarea').value = '';
+            }
         });
 
         const form = document.querySelector('form');
