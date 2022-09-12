@@ -2,7 +2,9 @@
 
 Experimental in-browser OpenTelemetry Collector Configuraton Validator. Work-in-progress.
 
-### Quick start
+**Demo**: [https://lightstep.github.io/otel-config-validator/](https://lightstep.github.io/otel-config-validator/)
+
+### Development: Quick start
 
 ```
     $ make
