@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <script src="wasm_exec.js"></script>
     <script src="example.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -48,10 +50,17 @@
                             placeholder="Paste your OpenTelemetry Collector YAML configuration here."></textarea>
                     </div>
                 </div>
-                <input type="submit" value="Validate" />
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <input type="submit" value="Validate" />
+                        <a href="#" id="export">Export...</a>
+                    </div>
+                </div>
             </fieldset>
         </form>
-        <p>Experimental WebAssembly-based <a href="https://github.com/lightstep/otel-config-validator">OpenTelemetry Configuration Validator.</a></p>
+        <footer>
+            <p>Experimental WebAssembly-based <a href="https://github.com/lightstep/otel-config-validator">OpenTelemetry Configuration Validator.</a></p>
+        </footer>
     </div>
     <script>
         const go = new Go();
@@ -59,6 +68,20 @@
             go.run(result.instance);
             document.querySelector('.spinner').classList.add('hidden');
             document.querySelector('form').classList.remove('hidden');
+        });
+
+        var examples = document.getElementById("export");
+        examples.addEventListener('click', () => {
+            var zip = new JSZip();
+            var col = zip.folder("otel-collector");
+            col.file("otel-collector-config.yaml", document.querySelector('textarea').value);
+            col.file("docker-compose.yml", window.DOCKER_COMPOSE_YML);
+            col.file("README.md", window.README_DOC);
+            zip.generateAsync({type:"blob"})
+            .then(function(content) {
+                // see FileSaver.js
+                saveAs(content, "otel-collector.zip");
+            });
         });
 
         var examples = document.getElementById("examples");
