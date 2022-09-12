@@ -19,3 +19,5 @@ Experimental in-browser OpenTelemetry Collector Configuraton Validator. Work-in-
 ### How it works
 
 Uses WebAssembly to run the Collector's validation logic in the browser. 🤯
+
+Only a partial subset of exporters, receivers, and processors are supported for now. See `components.go` for full list.
