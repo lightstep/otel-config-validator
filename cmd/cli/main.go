@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 
 	"github.com/smithclay/conftest/validator"
@@ -18,6 +19,12 @@ func main() {
 		return
 	}
 
-	log.Printf("is valid? %v", err)
-	log.Printf("pipelines: %v", cfg.Pipelines)
+	if err != nil {
+		log.Printf("%v", err)
+	}
+
+	fmt.Println("Pipelines: ")
+	for i, v := range cfg.Pipelines {
+		fmt.Printf("%s: Receivers = %s , Processors = %s , Exporters = %s\n", i, v.Receivers, v.Processors, v.Exporters)
+	}
 }
