@@ -1,5 +1,5 @@
-//go:build !wasm
-// +build !wasm
+//go:build wasm
+// +build wasm
 
 package validator
 
@@ -16,10 +16,8 @@ import (
 
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/awsemfexporter"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/awsxrayexporter"
-	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/prometheusexporter"
-	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/prometheusremotewriteexporter"
 
-	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/datadogexporter"
+	//"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/datadogexporter"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/dynatraceexporter"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/fileexporter"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/logzioexporter"
@@ -73,12 +71,12 @@ func Components() (component.Factories, error) {
 		loggingexporter.NewFactory(),
 		awsemfexporter.NewFactory(),
 		awsxrayexporter.NewFactory(),
-		datadogexporter.NewFactory(),
+		// datadogexporter.NewFactory(),
 		dynatraceexporter.NewFactory(),
 		fileexporter.NewFactory(),
 		logzioexporter.NewFactory(),
-		prometheusexporter.NewFactory(),
-		prometheusremotewriteexporter.NewFactory(),
+		// prometheusexporter.NewFactory(),
+		// prometheusremotewriteexporter.NewFactory(),
 		sapmexporter.NewFactory(),
 		signalfxexporter.NewFactory(),
 	}
