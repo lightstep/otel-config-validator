@@ -20,7 +20,7 @@ func main() {
 	}
 
 	if err != nil {
-		log.Printf("%v", err)
+		log.Fatal("%v", err)
 	}
 
 	fmt.Printf("OTEL Config file %v is valid\n", *filename)
