@@ -21,3 +21,23 @@ Experimental in-browser OpenTelemetry Collector Configuraton Validator. Work-in-
 Uses WebAssembly to run the Collector's validation logic in the browser. 🤯
 
 Only a partial subset of exporters, receivers, and processors are supported for now. See `components.go` for full list.
+
+### CLI mode
+
+The validator can be built as a command line utility:
+
+```
+    # build cli
+    $ go build -o otel-config-validator ./cmd/cli/main.go
+    
+    #run cli against otel config file
+    $ ./otel-config-validator -f /path/to/config
+```
+
+Output:
+
+```
+    OTEL Config file $FILENAME is valid
+    Pipelines: 
+    metrics: Receivers = [otlp] , Processors = [batch] , Exporters = [awsemf]
+```
