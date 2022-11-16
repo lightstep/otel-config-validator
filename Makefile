@@ -4,4 +4,4 @@ build:
 	GOOS=js GOARCH=wasm go build -o  assets/conftest.wasm cmd/main.go
 
 build-cli:
-	go build -o otel-config-validator ./cmd/cli/main.go
+	go build -o out/otel-config-validator ./cmd/cli/main.go
