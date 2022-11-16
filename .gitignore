@@ -2,3 +2,4 @@
 out/
 dist/
 assets/conftest.wasm
+otel-config-validator

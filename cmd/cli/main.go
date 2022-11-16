@@ -3,9 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
+	"io"
+	"os"
+	"path/filepath"
 
-	"github.com/smithclay/conftest/validator"
+	"github.com/lightstep/otel-config-validator/validator"
 )
 
 func main() {
@@ -13,14 +15,31 @@ func main() {
 	filename := flag.String("f", "", "collector yaml file")
 	flag.Parse()
 
-	cfg, err := validator.ValidateConfFromFile(*filename)
+	var content []byte
+	var err error
+	if len(*filename) == 0 {
+		fmt.Printf("reading from stdin...\n")
+		content, err = io.ReadAll(os.Stdin)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		content, err = os.ReadFile(filepath.Clean(*filename))
+		if err != nil {
+			fmt.Printf("error reading config file: %v", err)
+			os.Exit(1)
+		}
+	}
+
+	cfg, err := validator.IsValid(content)
 	if cfg == nil {
-		log.Printf("error reading config file: %v", err)
-		return
+		fmt.Printf("error reading config file: %v", err)
+		os.Exit(1)
 	}
 
 	if err != nil {
-		log.Fatal("%v", err)
+		fmt.Printf("%v", err)
+		os.Exit(1)
 	}
 
 	fmt.Printf("OTEL Config file %v is valid\n", *filename)

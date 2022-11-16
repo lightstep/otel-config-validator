@@ -1,25 +1,12 @@
 package validator
 
 import (
-	"os"
-	"path/filepath"
-
-	"github.com/smithclay/conftest/configunmarshaler"
+	"github.com/lightstep/otel-config-validator/configunmarshaler"
 
 	"go.opentelemetry.io/collector/config"
 	"go.opentelemetry.io/collector/confmap"
 	"gopkg.in/yaml.v3"
 )
-
-func ValidateConfFromFile(fileName string) (*config.Config, error) {
-	// Clean the path before using it.
-	content, err := os.ReadFile(filepath.Clean(fileName))
-	if err != nil {
-		return nil, err
-	}
-
-	return IsValid(content)
-}
 
 func IsValid(content []byte) (*config.Config, error) {
 	var rawConf map[string]interface{}
