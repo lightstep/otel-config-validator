@@ -1,12 +1,16 @@
 name: golangci-lint
 on:
   push:
+    paths-ignore:
+      - 'otel-vscode'
     tags:
       - v*
     branches:
       - master
       - main
   pull_request:
+    paths-ignore:
+      - 'otel-vscode'
 permissions:
   contents: read
   # Optional: allow read access to pull request. Use with `only-new-issues` option.
