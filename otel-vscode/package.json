@@ -10,13 +10,13 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:otel-vscode.helloWorld"
+    "onCommand:otel-vscode.validateOtelConfig"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "otel-vscode.helloWorld",
+        "command": "otel-vscode.validateOtelConfig",
         "title": "Validate OpenTelemetry Collector Config"
       }
     ]

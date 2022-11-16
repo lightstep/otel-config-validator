@@ -12,8 +12,8 @@ const execWithStdin = (cmd: string, input: string) =>
       }
       return resolve(out);
     });
-	script.stdin?.write(input);
-	script.stdin?.end();
+    script.stdin?.write(input);
+    script.stdin?.end();
   });
 
 // This method is called when your extension is activated
@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
   let disposable = vscode.commands.registerCommand(
-    "otel-vscode.helloWorld",
+    "otel-vscode.validateOtelConfig",
     async () => {
       // Get the active text editor
       const editor = vscode.window.activeTextEditor;
@@ -38,20 +38,24 @@ export function activate(context: vscode.ExtensionContext) {
         let document = editor.document;
 
         const documentText = document.getText();
-		try {
-			const output = await execWithStdin('/Users/clay.smith/workspace/otel-config-validator/otel-config-validator', documentText);
-			if (output.indexOf('is valid') > 0) {
-				vscode.window.showInformationMessage("Collector config is valid!");
-			} else {
-				vscode.window.showWarningMessage(`Collector config is invalid: ${output}`);
-			}
-		} catch (err) {
-			vscode.window.showWarningMessage(`Collector config is invalid: ${err}`);
-		}
+        try {
+          const output = await execWithStdin(
+            "/Users/clay.smith/workspace/otel-config-validator/out/otel-config-validator",
+            documentText
+          );
+          if (output.indexOf("is valid") > 0) {
+            vscode.window.showInformationMessage("Collector config is valid!");
+          } else {
+            vscode.window.showWarningMessage(
+              `Collector config is invalid: ${output}`
+            );
+          }
+        } catch (err) {
+          vscode.window.showWarningMessage(
+            `Collector config is invalid: ${err}`
+          );
+        }
       }
-
-      // The code you place here will be executed every time your command is executed
-      // Display a message box to the user
     }
   );
 
