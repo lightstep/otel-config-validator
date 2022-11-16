@@ -43,11 +43,11 @@ Output:
 
 
     Pipeline metrics:
-    Receivers: [otlp]
-    Processors: []
-    Exporters: [logging]
+      Receivers: [otlp]
+      Processors: []
+      Exporters: [logging]
     Pipeline traces:
-    Receivers: [otlp]
-    Processors: []
-    Exporters: [awsxray]
+      Receivers: [otlp]
+      Processors: []
+      Exporters: [awsxray]
 ```
