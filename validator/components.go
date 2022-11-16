@@ -24,7 +24,8 @@ import (
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/fileexporter"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/logzioexporter"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/sapmexporter"
-	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/signalfxexporter"
+
+	//"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/signalfxexporter"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/processor/attributesprocessor"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/processor/cumulativetodeltaprocessor"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/processor/deltatorateprocessor"
@@ -80,7 +81,7 @@ func Components() (component.Factories, error) {
 		prometheusexporter.NewFactory(),
 		prometheusremotewriteexporter.NewFactory(),
 		sapmexporter.NewFactory(),
-		signalfxexporter.NewFactory(),
+		//signalfxexporter.NewFactory(),
 	}
 	factories.Exporters, err = component.MakeExporterFactoryMap(exporters...)
 	if err != nil {

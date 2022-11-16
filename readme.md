@@ -1,10 +1,12 @@
 ## otel-config-validator
 
-Experimental in-browser OpenTelemetry Collector Configuraton Validator. Work-in-progress.
+Experimental OpenTelemetry Collector Configuraton Validator. Work-in-progress, currently supports usage:
 
-**Demo**: [https://lightstep.github.io/otel-config-validator/](https://lightstep.github.io/otel-config-validator/)
+* In-browser (via WebAssembly), see Demo: [https://lightstep.github.io/otel-config-validator/](https://lightstep.github.io/otel-config-validator/)
+* CLI
+* Visual Studio Code Extension
 
-### Development: Quick start
+### Development: Quick start (WebAssembly)
 
 ```
     $ make
@@ -18,9 +20,9 @@ Experimental in-browser OpenTelemetry Collector Configuraton Validator. Work-in-
 
 ### How it works
 
-Uses WebAssembly to run the Collector's validation logic in the browser. 🤯
+Runs validation on partial subset of exporters, receivers, and processors are supported for now. See `components.go` for full list.
 
-Only a partial subset of exporters, receivers, and processors are supported for now. See `components.go` for full list.
+In WebAssembly, some components are not supported because they cannot compile to wasm.
 
 ### CLI mode
 
@@ -37,7 +39,15 @@ The validator can be built as a command line utility:
 Output:
 
 ```
-    OTEL Config file $FILENAME is valid
-    Pipelines: 
-    metrics: Receivers = [otlp] , Processors = [batch] , Exporters = [awsemf]
+    OpenTelemetry Collector Configuration file `test-adot.yml` is valid.
+
+
+    Pipeline metrics:
+    Receivers: [otlp]
+    Processors: []
+    Exporters: [logging]
+    Pipeline traces:
+    Receivers: [otlp]
+    Processors: []
+    Exporters: [awsxray]
 ```
