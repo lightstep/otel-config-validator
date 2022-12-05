@@ -162,5 +162,38 @@ service:
       exporters:
       - logging
       - otlp/lightstep
+`,
+    "cloudwatch-rec":  `receivers:
+    otlp:
+      protocols:
+        grpc:
+
+processors:
+  batch:
+  memory_limiter:
+    check_interval: 1s
+    limit_percentage: 50
+    spike_limit_percentage: 30
+
+exporters:
+  awsemf:
+    region: 'us-west-2'
+    resource_to_telemetry_conversion:
+      enabled: true
+
+extensions:
+  health_check:
+
+service:
+  extensions: [health_check]
+  pipelines:
+    metrics:
+      receivers:
+      - otlp
+      processors:
+      - memory_limiter
+      - batch
+      exporters:
+      - awsemf   
 `
 }
