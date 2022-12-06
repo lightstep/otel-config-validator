@@ -19,7 +19,15 @@
         "command": "otel-vscode.validateOtelConfig",
         "title": "Validate OpenTelemetry Collector Config"
       }
-    ]
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "otelCollectorPipeline",
+          "name": "Pipelines"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
