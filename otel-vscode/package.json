@@ -37,6 +37,10 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
   },
+  "dependencies": {
+    "https-proxy-agent": "^5.0.0",
+    "proxy-from-env": "^1.1.0"
+  },
   "devDependencies": {
     "@types/vscode": "^1.73.0",
     "@types/glob": "^8.0.0",
