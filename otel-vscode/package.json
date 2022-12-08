@@ -12,6 +12,9 @@
   "activationEvents": [
     "onCommand:otel-vscode.validateOtelConfig"
   ],
+  "repository": {
+    "url": "https://github.com/lightstep/otel-config-validator"
+  },
   "main": "./out/extension.js",
   "contributes": {
     "commands": [

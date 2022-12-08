@@ -15,6 +15,14 @@ Currently, only validation of OpenTelemetry Collector configuration files is sup
 
 * TBD :)
 
+## Building and Installing Manually
+
+```
+    npm install
+    vsce package
+    code --install-extension otel-vscode-version.vsix
+```
+
 ## For more information
 
 * TBD :) 
