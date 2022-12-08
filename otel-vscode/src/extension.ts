@@ -5,6 +5,10 @@ import * as vscode from "vscode";
 import * as cp from "child_process";
 import { PipelineProvider } from "./pipeline";
 import { CollectorPipeline } from "./types";
+import * as path from 'node:path';
+
+const VERSION = 'v0.0.1';
+const BIN_PATH = path.join(__dirname, '../bin');
 
 const execWithStdin = (cmd: string, input: string) =>
   new Promise<string>((resolve, reject) => {
@@ -18,11 +22,10 @@ const execWithStdin = (cmd: string, input: string) =>
     script.stdin?.end();
   });
 
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  // TODO: enable platform-specific extensions: https://github.com/microsoft/vscode-platform-specific-sample
-
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
   console.log("otel-vscode extension is active");
@@ -47,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
         const documentText = document.getText();
         try {
           const output = await execWithStdin(
-            '"/Users/clay.smith/workspace/otel-config-validator/out/otel-config-validator" --json --stdin',
+            `"${BIN_PATH}/otel-config-validator_${VERSION}" --json --stdin`,
             documentText
           );
           const result = JSON.parse(output);

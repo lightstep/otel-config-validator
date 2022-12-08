@@ -51,32 +51,35 @@ export class PipelineProvider implements vscode.TreeDataProvider<PipelineItem> {
           )
       );
     } else if (label === "traces" || label === "metrics" || label === "logs") {
-      return [
-        new PipelineItem(
+      const items = [];
+      if (pipelineItem.receivers) {
+        items.push(new PipelineItem(
           "receivers",
-          pipelineItem.receivers
-            ? vscode.TreeItemCollapsibleState.Collapsed
-            : vscode.TreeItemCollapsibleState.None,
+          vscode.TreeItemCollapsibleState.Collapsed,
           pipelineItem,
           pipelineItem.receivers
-        ),
-        new PipelineItem(
+        ));
+      }
+
+      if (pipelineItem.processors) {
+        items.push(new PipelineItem(
           "processors",
-          pipelineItem.processors
-            ? vscode.TreeItemCollapsibleState.Collapsed
-            : vscode.TreeItemCollapsibleState.None,
+          vscode.TreeItemCollapsibleState.Collapsed,
           pipelineItem,
           pipelineItem.processors
-        ),
-        new PipelineItem(
+        ));
+      }
+
+      if (pipelineItem.exporters) {
+        items.push(new PipelineItem(
           "exporters",
-          pipelineItem.exporters
-            ? vscode.TreeItemCollapsibleState.Collapsed
-            : vscode.TreeItemCollapsibleState.None,
+          vscode.TreeItemCollapsibleState.Collapsed,
           pipelineItem,
-          pipelineItem.exporters
-        ),
-      ];
+          pipelineItem.processors
+        ));
+      }
+
+      return items;
     } else if (label === "receivers" && pipelineItem.receivers) {
       return pipelineItem.receivers!.map(
         (pr) =>
