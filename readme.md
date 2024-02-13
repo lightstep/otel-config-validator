@@ -1,5 +1,7 @@
 ## otel-config-validator
 
+> 📣 This project is deprecated. For collector config validation, check out [OTelBin](https://otelbin.io) or, as of early 2024, the collector now natively supports validating configuration [using the `validate` command](https://opentelemetry.io/docs/collector/configuration/#location).
+
 Experimental OpenTelemetry Collector Configuraton Validator. Work-in-progress, currently supports usage:
 
 * In-browser (via WebAssembly), see Demo: [https://lightstep.github.io/otel-config-validator/](https://lightstep.github.io/otel-config-validator/)
